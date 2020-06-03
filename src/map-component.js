@@ -2,13 +2,13 @@ import React from "react";
 import L from "leaflet";
 import { Map, TileLayer, Popup, CircleMarker } from "react-leaflet";
 import "./map-component.css";
-import useCovidCountriesStats from "./hooks/use-covid-countries-stats";
+import useCovidData from "./hooks/use-covid-countries-stats";
 import GlobalStatComponent from "./global-stat-component";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
 export default function MapComponent() {
-  const [covidCountriesStats] = useCovidCountriesStats();
+  const [covidCountriesStats] = useCovidData();
 
   const markers = covidCountriesStats.map((covidCountryStat) => {
     return (
@@ -39,15 +39,22 @@ export default function MapComponent() {
   });
 
   return (
-    <div className="covid-map-and-global-stat-block">
-      <Map zoom={3} minZoom={3} center={[33.521862, 31.908509]}>
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {markers}
-      </Map>
-      <GlobalStatComponent />
+    <div>
+      <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+          Covid Map
+        </a>
+      </nav>
+      <div className="covid-map-and-global-stat-block">
+        <Map zoom={3} minZoom={3} center={[33.521862, 31.908509]}>
+          <TileLayer
+            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {markers}
+        </Map>
+        <GlobalStatComponent />
+      </div>
     </div>
   );
 }
